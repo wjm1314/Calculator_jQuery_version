@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .board {
+            margin: 60px auto;
+            padding:20px;
+            background-color: #000000;
+            color: white;
+            font-size: 30px;
+            width: 300px;
+        }
+        input.text {
+            width: 100%;
+            height:45px;
+            font-size: 23pt;
+            padding-left: 6px;
+        }
+        .line {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            align-items: flex-start;
+        }
+        .cell {
+            width:60px;
+            height: 60px;
+            line-height:60px;
+            text-align: center;
+            border-radius: 50px;
+            background-color: grey;
+            cursor: pointer;
+        }
+        .cell-operate,.equal {
+            background-color: orange;
+        }
+        .cell-speOperate {
+            background-color: darkgrey;
+        }
+        .zero {
+            width: 140px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+<div class="board">
+    <input type="text" class="text">
+    <div class="line">
+        <div class="cell cell-speOperate delete">AC</div>
+        <div class="cell cell-speOperate">+/-</div>
+        <div class="cell cell-speOperate">%</div>
+        <div class="cell cell-operate">/</div>
+    </div>
+    <div class="line">
+        <div class="cell cell-num">7</div>
+        <div class="cell cell-num">8</div>
+        <div class="cell cell-num">9</div>
+        <div class="cell cell-operate">*</div>
+    </div>
+    <div class="line">
+        <div class="cell cell-num">4</div>
+        <div class="cell cell-num">5</div>
+        <div class="cell cell-num">6</div>
+        <div class="cell cell-operate">-</div>
+    </div>
+    <div class="line">
+        <div class="cell cell-num">1</div>
+        <div class="cell cell-num">2</div>
+        <div class="cell cell-num">3</div>
+        <div class="cell cell-operate">+</div>
+    </div>
+    <div class="line line-last">
+        <div class="cell cell-num zero">0</div>
+        <div class="cell cell-num">.</div>
+        <div class="cell equal">=</div>
+    </div>
+</div>
+<script src="jquery-2.1.0.min.js"></script>
+<script>
+    //获取文本框
+    var text = $('.text');
+    //获取删除按钮
+    var deleteButton = $('.delete');
+    //获取等于号
+    var equal = $('.equal');
+    //获取数字0-9和 .
+    var num = $('.cell-num');
+    //获取运算符
+    var operate = $('.cell-operate');
+    //给0-9添加点击事件
+    for(var i=0; i<num.length; i++) {
+        num[i].onclick = (e) => {
+            if(text.val() === ''){
+                text.val(e.target.innerText);
+            }else {
+                text.val(text.val() + e.target.innerText);
+            }
+        }
+    }
+    //给AC按钮添加清零事件；
+    deleteButton.click(() => {
+        text.val("");
+    })
+    //运算符点击事件
+    for(var i=0; i<operate.length; i++) {
+        operate[i].onclick = (e) => {
+            text.val(text.val() + e.target.innerText);
+        }
+    }
+    //等于号点击事件
+    equal.click(() => {
+        var c = eval(text.val());
+        text.val(parseFloat(c.toPrecision(12)));
+    })
+</script>
+</body>
+</html>
